@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersRequest;
+use App\User;
+use App\Role;
+
 use Illuminate\Http\Request;
+
 
 class AdminUserscontroller extends Controller
 {
@@ -13,7 +18,8 @@ class AdminUserscontroller extends Controller
      */
     public function index()
     {
-       return view('admin.users.index');
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -23,7 +29,10 @@ class AdminUserscontroller extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+  // Izvukli smo roles iz baze i predstavili pomocu methode lists, gde obavezno moramo dodati all() na kraju da bi povukli sve. Ustvari dobicemo gresku ako koristimo lists jer je uklonjen posle verzije 5.2. mozemo da koristimo PLUCK i radice bez problema !! Znaci PLUCK a ne LISTS!!!
+
+        $roles = Role::pluck('name','id')->all();
+        return view('admin.users.create',compact('roles'));
     }
 
     /**
@@ -32,9 +41,14 @@ class AdminUserscontroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
-        //
+
+        User::create($request->all());
+
+        return redirect('/admin/users');
+
+        // return $request->all();
     }
 
     /**
