@@ -35,8 +35,8 @@
 	</div>
 	<div class="form-group">
 
-		{{  Form::label('file', 'File:')  }}
-		{{  Form::file('file','',['class'=>'form-control','placeholder'=>'Choose files..'])  }}
+		{{  Form::label('photo_id', 'Photo:')  }}
+		{{  Form::file('photo_id','',['class'=>'form-control','placeholder'=>'Choose files..'])  }}
 
 	</div>
 	<div class="form-group">
